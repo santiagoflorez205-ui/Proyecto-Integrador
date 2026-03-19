@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmartHardware — Sitemap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0c1a34; --blue-d:#1B365D; --blue-m:#2A4A7F; --blue-l:#4a7fc1;
+  --blue-xl:#b5d4f4; --blue-2xl:#e6f1fb;
+  --red:#c62828; --red-l:#ffebee;
+  --green:#2e7d32; --green-l:#e8f5e9;
+  --amber:#e65100; --amber-l:#fff3e0;
+  --purple:#4527a0; --purple-l:#ede7f6;
+  --slate:#546e7a; --slate-l:#eceff1;
+  --bg:#f0f4f9; --white:#ffffff; --border:#d0dcea;
+  --text:#0c1a34; --muted:#5f7a9a;
+}
+body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:36px 32px 80px}
+
+/* PAGE HEADER */
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.brand-row{display:flex;align-items:center;gap:12px}
+.brand-badge{background:var(--blue-d);color:#fff;font-family:'DM Mono',monospace;font-size:12px;padding:4px 10px;border-radius:6px;letter-spacing:.5px}
+.brand-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-1px}
+.page-meta{text-align:right}
+.page-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--blue-m);text-transform:uppercase;letter-spacing:1.5px}
+.page-sub{font-size:11px;color:var(--muted);margin-top:3px;font-family:'DM Mono',monospace}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:28px;padding:12px 18px;background:var(--white);border:1px solid var(--border);border-radius:10px}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);font-weight:700}
+.lchip{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.rp{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.rp-a{background:var(--blue-2xl);color:var(--blue-d)}
+.rp-v{background:var(--slate-l);color:var(--slate)}
+.rp-b{background:var(--green-l);color:var(--green)}
+
+/* SITEMAP WRAPPER — position:relative so SVG overlay works */
+.sitemap-wrap{
+  position:relative;
+  width:100%;
+  overflow-x:auto;
+}
+
+/* SVG connector overlay */
+.connector-svg{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  overflow:visible;
+}
+
+/* NODE BASE */
+.node{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  padding:11px 15px;
+  position:relative;
+  transition:transform .17s,box-shadow .17s;
+  cursor:default;
+}
+.node:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(27,54,93,.10)}
+.node::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0}
+.node.blue::before  {background:var(--blue-m)}
+.node.green::before {background:var(--green)}
+.node.amber::before {background:var(--amber)}
+.node.purple::before{background:var(--purple)}
+.node.slate::before {background:var(--slate)}
+.node.red::before   {background:var(--red)}
+
+.node-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);letter-spacing:-.2px;white-space:nowrap}
+.node-sub{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4}
+.node-hu{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px}
+.node-roles{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+
+/* ROOT */
+.node-root{
+  background:var(--navy);border:none;border-radius:12px;
+  padding:14px 28px;text-align:center;display:inline-block;
+}
+.node-root .node-title{color:#fff;font-size:14px}
+.node-root .node-sub{color:rgba(255,255,255,.45);text-align:center}
+.node-root .node-hu{color:rgba(255,255,255,.3)}
+
+/* SHELL */
+.node-shell{
+  background:var(--blue-d);border:none;border-radius:10px;
+  padding:13px 32px;text-align:center;display:inline-block;
+}
+.node-shell .node-title{color:#fff;font-size:13px}
+.node-shell .node-sub{color:rgba(255,255,255,.45)}
+
+/* DASHBOARD */
+.node-dashboard{
+  background:var(--white);border:2px solid var(--blue-m);border-radius:10px;
+  padding:13px 24px;text-align:center;display:inline-block;
+  position:relative;
+}
+.node-dashboard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue-m);border-radius:10px 10px 0 0}
+.node-dashboard .node-title{color:var(--blue-d);font-size:13px}
+.node-dashboard .node-sub{color:var(--muted)}
+
+/* ALERT NODE */
+.node-alert{
+  background:var(--red-l);border:1.5px solid var(--red);border-radius:10px;
+  padding:11px 15px;position:relative;display:inline-block;
+}
+.node-alert::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);border-radius:10px 10px 0 0}
+.node-alert .node-title{color:var(--red)}
+.node-alert .node-sub{color:#b71c1c}
+.node-alert .node-hu{color:#c62828;opacity:.7}
+
+/* MODULE BOX */
+.module-box{
+  border:1.5px dashed var(--border);
+  border-radius:12px;
+  padding:14px 14px 12px;
+  position:relative;
+  background:rgba(255,255,255,.5);
+}
+.module-label{
+  position:absolute;top:-10px;left:12px;
+  background:var(--bg);padding:0 7px;
+  font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);font-family:'DM Mono',monospace;border-radius:4px;
+}
+.module-nodes{display:flex;gap:0;align-items:stretch}
+
+/* Arrow between sibling nodes */
+.sibling-arrow{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:0 6px;
+  gap:2px;
+}
+.sibling-arrow .arr-line{width:28px;height:2px;background:var(--border)}
+.sibling-arrow .arr-head{
+  font-size:10px;color:var(--muted);margin-left:auto;
+  line-height:1;margin-top:-7px;
+}
+.sibling-arrow .arr-label{font-size:9px;color:var(--muted);white-space:nowrap;margin-top:4px}
+
+/* LEVEL ROWS */
+.level{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+.modules-row{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  align-items:flex-start;
+  position:relative;
+}
+
+/* RBAC TABLE */
+.rbac-section{margin-top:44px;max-width:900px;margin-left:auto;margin-right:auto}
+.rbac-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.rbac-title::before{content:'';display:block;width:3px;height:16px;background:var(--blue-m);border-radius:2px}
+.rbac-table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rbac-table th{background:var(--navy);color:#fff;font-family:'Syne',sans-serif;font-size:11px;font-weight:600;padding:10px 16px;text-align:left;letter-spacing:.3px}
+.rbac-table td{padding:9px 16px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.rbac-table tr:last-child td{border-bottom:none}
+.rbac-table tr:hover td{background:var(--blue-2xl)}
+.hu-code{font-family:'DM Mono',monospace;font-size:11px;color:var(--blue-m);background:var(--blue-2xl);padding:2px 6px;border-radius:4px}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.5px solid transparent}
+.dot.a{background:var(--blue-m);border-color:var(--blue-m)}
+.dot.v{background:var(--slate);border-color:var(--slate)}
+.dot.b{background:var(--green);border-color:var(--green)}
+.dot.x{background:transparent;border-color:#d0dcea}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.sitemap-wrap>*{animation:fadeUp .4s ease both}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="brand-row">
+    <span class="brand-badge">SH</span>
+    <span class="brand-name">SmartHardware</span>
+  </div>
+  <div class="page-meta">
+    <div class="page-title">Sitemap del sistema</div>
+    <div class="page-sub">Ferrelectricos Olaya · 10 pantallas · HU-01 → HU-10</div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><span class="lchip" style="background:var(--navy)"></span>Raíz / Shell</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--blue-m)"></span>Principal</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--green)"></span>Inventario</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--amber)"></span>Operaciones</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--purple)"></span>Analytics</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--slate)"></span>Administración</div>
+  <div class="legend-item"><span class="lchip" style="background:var(--red)"></span>Alerta global</div>
+  <div style="width:1px;background:var(--border);margin:0 4px"></div>
+  <div class="legend-item"><span class="rp rp-a">A</span> Admin</div>
+  <div class="legend-item"><span class="rp rp-v">V</span> Vendedor</div>
+  <div class="legend-item"><span class="rp rp-b">B</span> Bodeguero</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SITEMAP — built with a real JS layout engine
+     so connectors are always pixel-perfect
+══════════════════════════════════════════════════ -->
+<div class="sitemap-wrap" id="sitemapWrap">
+
+  <!-- All nodes are placed by JS into a grid, then an SVG is drawn on top -->
+
+  <!-- L0 ROOT -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:0" id="tree">
+
+    <!-- ROW 0: Login -->
+    <div class="level" id="row0">
+      <div class="node-root node" id="n-root">
+        <div class="node-title">Página pública</div>
+        <div class="node-sub">Login / Autenticación</div>
+        <div class="node-hu">HU-01 · Acceso público</div>
+      </div>
+    </div>
+
+    <div style="height:32px"></div>
+
+    <!-- ROW 1: Shell -->
+    <div class="level" id="row1">
+      <div class="node-shell node" id="n-shell">
+        <div class="node-title">App Shell</div>
+        <div class="node-sub">Sidebar global · Header global · Router</div>
+      </div>
+    </div>
+
+    <div style="height:32px"></div>
+
+    <!-- ROW 2: Dashboard -->
+    <div class="level" id="row2">
+      <div class="node-dashboard node" id="n-dash">
+        <div class="node-title">Dashboard</div>
+        <div class="node-sub">KPIs · Gráficas · Stock crítico · Actividad reciente</div>
+        <div class="node-hu">HU-05</div>
+        <div class="node-roles" style="justify-content:center">
+          <span class="rp rp-a">A Admin</span>
+          <span class="rp rp-v">V Vendedor</span>
+          <span class="rp rp-b">B Bodeguero</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:40px"></div>
+
+    <!-- ROW 3: 4 modules -->
+    <div class="modules-row" id="row3">
+
+      <!-- MODULE INVENTARIO -->
+      <div class="module-box" id="mod-inv" style="border-color:var(--green)">
+        <div class="module-label" style="color:var(--green)">Módulo Inventario</div>
+        <div class="module-nodes">
+
+          <div class="node green" id="n-list" style="width:148px">
+            <div class="node-title">Lista de productos</div>
+            <div class="node-sub">Tabla · Filtros<br>Paginación · Export</div>
+            <div class="node-hu">Vista principal</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+              <span class="rp rp-v" style="opacity:.7;font-size:9px">V lect.</span>
+              <span class="rp rp-b">B</span>
+            </div>
+          </div>
+
+          <!-- Arrow Lista → Agregar -->
+          <div class="sibling-arrow">
+            <div style="display:flex;align-items:center;gap:0">
+              <div style="width:22px;height:2px;background:var(--green)"></div>
+              <div style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid var(--green)"></div>
+            </div>
+            <div class="arr-label" style="color:var(--green)">editar</div>
+          </div>
+
+          <div class="node green" id="n-edit" style="width:148px">
+            <div class="node-title">Agregar / Editar</div>
+            <div class="node-sub">SKU · Categoría<br>Precio · Proveedor</div>
+            <div class="node-hu">HU-02</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+              <span class="rp rp-b">B</span>
+            </div>
+          </div>
+
+          <!-- Arrow Agregar → Stock -->
+          <div class="sibling-arrow">
+            <div style="display:flex;align-items:center;gap:0">
+              <div style="width:22px;height:2px;background:var(--green)"></div>
+              <div style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid var(--green)"></div>
+            </div>
+            <div class="arr-label" style="color:var(--green)">ajustar</div>
+          </div>
+
+          <div class="node green" id="n-stock" style="width:148px">
+            <div class="node-title">Actualizar Stock</div>
+            <div class="node-sub">Ingreso / Salida<br>Justificación · Log</div>
+            <div class="node-hu">HU-03</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+              <span class="rp rp-v">V</span>
+              <span class="rp rp-b">B</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODULE DATOS -->
+      <div class="module-box" id="mod-data" style="border-color:var(--amber)">
+        <div class="module-label" style="color:var(--amber)">Operaciones</div>
+        <div class="module-nodes">
+          <div class="node amber" id="n-pos" style="width:158px">
+            <div class="node-title">Importar Ventas POS</div>
+            <div class="node-sub">Carga CSV · Validación<br>Vista previa · Log</div>
+            <div class="node-hu">HU-04</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+              <span class="rp rp-v">V</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE ANALYTICS -->
+      <div class="module-box" id="mod-analytics" style="border-color:var(--purple)">
+        <div class="module-label" style="color:var(--purple)">Analytics</div>
+        <div class="module-nodes">
+
+          <div class="node purple" id="n-pred" style="width:152px">
+            <div class="node-title">Predicción demanda</div>
+            <div class="node-sub">Modelo ML · Pronóstico<br>Serie temporal · Export</div>
+            <div class="node-hu">HU-06</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+            </div>
+          </div>
+
+          <div class="sibling-arrow">
+            <div style="display:flex;align-items:center;gap:0">
+              <div style="width:22px;height:2px;background:var(--purple)"></div>
+              <div style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid var(--purple)"></div>
+            </div>
+            <div class="arr-label" style="color:var(--purple)">insumo</div>
+          </div>
+
+          <div class="node purple" id="n-abc" style="width:152px">
+            <div class="node-title">Clasificación ABC/XYZ</div>
+            <div class="node-sub">Matriz categorías<br>Umbral configurable</div>
+            <div class="node-hu">HU-07</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODULE ADMIN -->
+      <div class="module-box" id="mod-admin" style="border-color:var(--slate)">
+        <div class="module-label" style="color:var(--slate)">Administración</div>
+        <div class="module-nodes">
+
+          <div class="node slate" id="n-prov" style="width:148px">
+            <div class="node-title">Proveedores</div>
+            <div class="node-sub">Lista · Ficha · NIT<br>Productos vinculados</div>
+            <div class="node-hu">HU-08</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+              <span class="rp rp-b">B</span>
+            </div>
+          </div>
+
+          <div class="sibling-arrow">
+            <div style="display:flex;align-items:center;gap:0">
+              <div style="width:22px;height:2px;background:var(--slate)"></div>
+              <div style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid var(--slate)"></div>
+            </div>
+            <div class="arr-label" style="color:var(--slate)">gestión</div>
+          </div>
+
+          <div class="node slate" id="n-rbac" style="width:148px">
+            <div class="node-title">Usuarios / RBAC</div>
+            <div class="node-sub">Alta/baja · Roles<br>Permisos granulares</div>
+            <div class="node-hu">HU-10</div>
+            <div class="node-roles">
+              <span class="rp rp-a">A</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /modules-row -->
+
+    <div style="height:36px"></div>
+
+    <!-- ROW 4: Alert global -->
+    <div class="level" id="row4">
+      <div class="node-alert" id="n-alert">
+        <div class="node-title">&#9888; Alerta global de stock</div>
+        <div class="node-sub">Stock-out detectado · Banner rojo en header<br>Notificación sidebar · Email al Administrador</div>
+        <div class="node-hu">Overlay global · Disparada por HU-03</div>
+        <div class="node-roles" style="margin-top:6px">
+          <span class="rp rp-a">A Admin</span>
+          <span class="rp rp-v">V Vendedor</span>
+          <span class="rp rp-b">B Bodeguero</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:8px"></div>
+
+  </div><!-- /#tree -->
+
+  <!-- SVG overlay is injected by JS -->
+
+</div><!-- /#sitemapWrap -->
+
+
+<!-- RBAC TABLE -->
+<div class="rbac-section">
+  <div class="rbac-title">Matriz de control de acceso — RBAC</div>
+  <table class="rbac-table">
+    <thead>
+      <tr>
+        <th>Pantalla</th><th>HU</th>
+        <th style="text-align:center">Admin</th>
+        <th style="text-align:center">Vendedor</th>
+        <th style="text-align:center">Bodeguero</th>
+        <th>Módulo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Login / Autenticación</td><td><span class="hu-code">HU-01</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Público</td></tr>
+      <tr><td>Dashboard</td><td><span class="hu-code">HU-05</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Principal</td></tr>
+      <tr><td>Lista de productos</td><td><span class="hu-code">—</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Inventario</td></tr>
+      <tr><td>Agregar / Editar producto</td><td><span class="hu-code">HU-02</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot x"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Inventario</td></tr>
+      <tr><td>Actualizar stock</td><td><span class="hu-code">HU-03</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Inventario</td></tr>
+      <tr><td>Importar ventas POS</td><td><span class="hu-code">HU-04</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot x"></span></td><td>Operaciones</td></tr>
+      <tr><td>Predicción de demanda</td><td><span class="hu-code">HU-06</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot x"></span></td><td style="text-align:center"><span class="dot x"></span></td><td>Analytics</td></tr>
+      <tr><td>Clasificación ABC/XYZ</td><td><span class="hu-code">HU-07</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot x"></span></td><td style="text-align:center"><span class="dot x"></span></td><td>Analytics</td></tr>
+      <tr><td>Gestión de proveedores</td><td><span class="hu-code">HU-08</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot x"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Administración</td></tr>
+      <tr><td>Usuarios / RBAC</td><td><span class="hu-code">HU-10</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot x"></span></td><td style="text-align:center"><span class="dot x"></span></td><td>Administración</td></tr>
+      <tr><td>Alerta global de stock</td><td><span class="hu-code">—</span></td><td style="text-align:center"><span class="dot a"></span></td><td style="text-align:center"><span class="dot v"></span></td><td style="text-align:center"><span class="dot b"></span></td><td>Overlay global</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+// Draw SVG connectors based on actual DOM positions
+(function() {
+  function mid(el) {
+    const wrap = document.getElementById('sitemapWrap');
+    const wr   = wrap.getBoundingClientRect();
+    const r    = el.getBoundingClientRect();
+    return {
+      top:    r.top    - wr.top  + wrap.scrollTop,
+      bottom: r.bottom - wr.top  + wrap.scrollTop,
+      left:   r.left   - wr.left + wrap.scrollLeft,
+      right:  r.right  - wr.left + wrap.scrollLeft,
+      cx:     (r.left + r.right)  / 2 - wr.left + wrap.scrollLeft,
+      cy:     (r.top  + r.bottom) / 2 - wr.top  + wrap.scrollTop,
+      w:      r.width,
+      h:      r.height,
+    };
+  }
+
+  function draw() {
+    const wrap = document.getElementById('sitemapWrap');
+
+    // Remove any previous SVG
+    const old = wrap.querySelector('.connector-svg');
+    if (old) old.remove();
+
+    const W = wrap.scrollWidth;
+    const H = wrap.scrollHeight;
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('class','connector-svg');
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+    svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;overflow:visible';
+
+    function line(x1,y1,x2,y2,color,dashed){
+      const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+      l.setAttribute('x1',Math.round(x1)); l.setAttribute('y1',Math.round(y1));
+      l.setAttribute('x2',Math.round(x2)); l.setAttribute('y2',Math.round(y2));
+      l.setAttribute('stroke', color);
+      l.setAttribute('stroke-width','2');
+      l.setAttribute('stroke-linecap','round');
+      if(dashed) l.setAttribute('stroke-dasharray','5 4');
+      svg.appendChild(l);
+    }
+
+    function path(d, color, dashed){
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d', d);
+      p.setAttribute('stroke', color);
+      p.setAttribute('stroke-width','2');
+      p.setAttribute('stroke-linecap','round');
+      p.setAttribute('stroke-linejoin','round');
+      p.setAttribute('fill','none');
+      if(dashed) p.setAttribute('stroke-dasharray','5 4');
+      svg.appendChild(p);
+    }
+
+    // color palette
+    const C = {
+      blue:   '#2A4A7F',
+      border: '#d0dcea',
+      green:  '#2e7d32',
+      amber:  '#e65100',
+      purple: '#4527a0',
+      slate:  '#546e7a',
+      red:    '#c62828',
+    };
+
+    const root  = mid(document.getElementById('n-root'));
+    const shell = mid(document.getElementById('n-shell'));
+    const dash  = mid(document.getElementById('n-dash'));
+    const inv   = mid(document.getElementById('mod-inv'));
+    const data  = mid(document.getElementById('mod-data'));
+    const anal  = mid(document.getElementById('mod-analytics'));
+    const adm   = mid(document.getElementById('mod-admin'));
+    const alert = mid(document.getElementById('n-alert'));
+    const stock = mid(document.getElementById('n-stock'));
+
+    // 1. Root → Shell (vertical center)
+    line(root.cx, root.bottom, shell.cx, shell.top, C.blue);
+
+    // 2. Shell → Dashboard
+    line(shell.cx, shell.bottom, dash.cx, dash.top, C.blue);
+
+    // 3. Dashboard → spread bar (horizontal line at a midpoint between dash bottom and module tops)
+    const modTop = Math.min(inv.top, data.top, anal.top, adm.top);
+    const spreadY = dash.bottom + (modTop - dash.bottom) / 2;
+
+    // vertical from dash down to spread level
+    line(dash.cx, dash.bottom, dash.cx, spreadY, C.blue);
+
+    // centers of each module group
+    const mods = [
+      { el: inv,  color: C.green  },
+      { el: data, color: C.amber  },
+      { el: anal, color: C.purple },
+      { el: adm,  color: C.slate  },
+    ];
+
+    const leftX  = mods[0].el.cx;
+    const rightX = mods[mods.length-1].el.cx;
+
+    // horizontal spread bar (full width, one neutral color)
+    line(leftX, spreadY, rightX, spreadY, C.border);
+
+    // vertical from spread bar down to each module, colored per module
+    mods.forEach(m => {
+      line(m.el.cx, spreadY, m.el.cx, m.el.top, m.color);
+    });
+
+    // 4. Alert: dashed line from Stock Update node bottom → alert top
+    // Route: down from stock, then left-bend to alert center
+    const stockNode = mid(document.getElementById('n-stock'));
+    const ax = alert.cx;
+    const ay = alert.top;
+    const sx = stockNode.cx;
+    const sy = stockNode.bottom;
+    const midY = sy + (ay - sy) * 0.45;
+
+    path(
+      `M ${Math.round(sx)} ${Math.round(sy)} L ${Math.round(sx)} ${Math.round(midY)} L ${Math.round(ax)} ${Math.round(midY)} L ${Math.round(ax)} ${Math.round(ay)}`,
+      C.red, true
+    );
+
+    // Small arrowhead at alert top
+    const ah = 8;
+    path(`M ${Math.round(ax)-5} ${Math.round(ay)-ah} L ${Math.round(ax)} ${Math.round(ay)} L ${Math.round(ax)+5} ${Math.round(ay)-ah}`, C.red, false);
+
+    wrap.appendChild(svg);
+  }
+
+  // Draw after fonts + layout settle
+  if (document.fonts) {
+    document.fonts.ready.then(() => setTimeout(draw, 80));
+  } else {
+    window.addEventListener('load', () => setTimeout(draw, 80));
+  }
+
+  // Redraw on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(draw, 120);
+  });
+})();
+</script>
+</body>
+</html>
